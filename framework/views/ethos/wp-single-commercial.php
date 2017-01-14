@@ -1,28 +1,31 @@
 <?php
 
 // =============================================================================
-// VIEWS/ETHOS/WOOCOMMERCE.PHP
+// VIEWS/ETHOS/WP-SINGLE.PHP
 // -----------------------------------------------------------------------------
-// WooCommerce page output for Ethos.
+// Single post output for Ethos.
 // =============================================================================
+
+$fullwidth = get_post_meta( get_the_ID(), '_x_post_layout', true );
 
 ?>
 
 <?php get_header(); ?>
-
+  
   <div class="x-container max width main">
     <div class="offset cf">
       <div class="<?php x_main_content_class(); ?>" role="main">
 
-        <?php if ( x_is_product() ) : ?>
-          <?php x_ethos_entry_top_navigation(); ?>
-        <?php endif; ?>
-
-        <?php woocommerce_content(); ?>
+        <?php while ( have_posts() ) : the_post(); ?>
+          <?php x_get_view( 'ethos', 'content-commercial', get_post_format() ); ?>
+          <?php x_get_view( 'global', '_comments-template' ); ?>
+        <?php endwhile; ?>
 
       </div>
 
-      <?php get_sidebar(); ?>
+      <?php if ( $fullwidth != 'on' ) : ?>
+        <?php //get_sidebar(); ?>
+      <?php endif; ?>
 
     </div>
   </div>
