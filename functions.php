@@ -50,10 +50,27 @@ $rewrite  = defined( 'EPL_RENTAL_DISABLE_REWRITE' ) && EPL_RENTAL_DISABLE_REWRIT
 
 define('EPL_RENTAL_SLUG', 'for-rent');
 
+// Apply filter
+add_filter('body_class', 'multisite_body_classes');
+
+function multisite_body_classes($classes) {
+    
+	if( is_single() && is_property() && is_printable() )
+	{
+        $classes[] = 'printable';
+    }
+	
+	return $classes;
+}
+
 
 add_action( 'wp_enqueue_scripts', 'my_scripts' );
 function my_scripts() 
 {
+	// magnific-popup
+	wp_enqueue_script( 'magnific-popup', get_stylesheet_directory_uri() . '/js/jquery.magnific-popup.min.js' );
+	wp_enqueue_style( 'magnific-popup-css', get_stylesheet_directory_uri() . '/css/magnific-popup.css');
+	
 	wp_enqueue_style( 'x-custom-styles', get_stylesheet_directory_uri() . '/the-styles.css', array(), date('YmdHis') );
 	wp_enqueue_script( 'app', get_stylesheet_directory_uri() . '/js/app.js', array(), date('YmdHis') );
 }
@@ -142,6 +159,16 @@ function get_epl_search_query()
 	return query_posts($args);
 }
 
+function is_printable()
+{
+	
+	if( isset($_REQUEST['printable']) && $_REQUEST['printable'] == 'yes' )
+		return true;
+	else
+		return false;
+		
+}
+
 function is_property()
 {
 	
@@ -158,3 +185,20 @@ function custom_epl_format_the_excerpt( $content ) {
 	return $content;
 }
 //add_filter( 'epl_the_excerpt' , 'custom_epl_format_the_excerpt' );
+
+
+
+function property_contact_information()
+{
+ // First footer widget area, located in the footer. Empty by default.
+    register_sidebar( array(
+        'name' => 'Property Contact Information',
+        'id' => 'property-contact-information',
+        'before_widget' => '<div id="%1$s" class="property-contact-information %2$s">',
+        'after_widget' => '</div>',
+        //'before_title' => '<h3 class="widget-title">',
+        //'after_title' => '</h3>',
+    ) );
+}
+
+add_action( 'widgets_init', 'property_contact_information' );

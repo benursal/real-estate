@@ -16,5 +16,22 @@ jQuery(document).ready(function($){
 	
 	//console.log("body: " + body_height + " map: " + map_pos.top + " listing: " + listing_pos.top );
 	
+	// post listing
+	var property_list = $('#column-property-list').find('.epl-listing-post');
+	
+	property_list.find('a').click(function(e){
+		// prevent going to the page
+		e.preventDefault();
+		
+		alert(this.href);
+	});
+	
+	$('.overlay-featured-marker').bind('click', function(ev){
+		alert('test');
+		// prevent going to the page
+		ev.preventDefault();
+	});
+	
+	
 	
 });
