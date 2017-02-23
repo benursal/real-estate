@@ -316,6 +316,28 @@ body.printable .property-contact-sidebar{
 	object-fit:cover;
 }
 
+
+
+.white-popup {
+	position: relative;
+	background: #FFF;
+	padding: 40px 0px 15px 0px;
+	height:auto;
+	min-height:300px;
+	width: 65%;
+	margin: 20px 17.5%;
+	border-radius:15px;
+	overflow-y:hidden;
+}
+
+.white-popup .body{
+	margin:0 auto;
+	width:80%;
+	margin-left:10%;
+	padding-top:30px;
+	padding-bottom:40px;
+}
+
 @media (max-width: 767px){
 	
 	.entry-wrap-list .entry-column-left{

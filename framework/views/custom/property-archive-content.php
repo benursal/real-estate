@@ -10,6 +10,10 @@
 
 <?php do_action( 'x_before_the_content_begin' ); ?>
 
+<div id="property-popup" class="white-popup mfp-hide"><div class="body"></div></div>
+<a href="#property-popup" class="popup-opener" style="display:none">Show inline popup</a>
+
+
 <div class="entry-content content">
 
 <?php do_action( 'x_after_the_content_begin' ); ?>

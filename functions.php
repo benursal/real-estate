@@ -70,9 +70,14 @@ function my_scripts()
 	// magnific-popup
 	wp_enqueue_script( 'magnific-popup', get_stylesheet_directory_uri() . '/js/jquery.magnific-popup.min.js' );
 	wp_enqueue_style( 'magnific-popup-css', get_stylesheet_directory_uri() . '/css/magnific-popup.css');
-	
 	wp_enqueue_style( 'x-custom-styles', get_stylesheet_directory_uri() . '/the-styles.css', array(), date('YmdHis') );
-	wp_enqueue_script( 'app', get_stylesheet_directory_uri() . '/js/app.js', array(), date('YmdHis') );
+	wp_enqueue_script( 'app_code', get_stylesheet_directory_uri() . '/js/app.js', array(), date('YmdHis') );
+	
+	wp_localize_script( 'app_code', 'app', array(
+		'ajax_url' => admin_url( 'admin-ajax.php' )
+	));
+	
+	
 }
 
 function is_epl_search()
@@ -202,3 +207,20 @@ function property_contact_information()
 }
 
 add_action( 'widgets_init', 'property_contact_information' );
+
+
+
+//Show popup product info
+add_action( 'wp_ajax_nopriv_property_single_popup', 'property_single_popup' );
+add_action( 'wp_ajax_property_single_popup', 'property_single_popup' );
+
+function property_single_popup()
+{
+	$prop_url = str_replace(site_url().'/', '', $_REQUEST['property_url']);
+	$prop_url = mb_substr($prop_url, 0, -1);
+	$url = explode('/', $prop_url);
+	
+	show_pre( $url );
+	
+	die();
+}
