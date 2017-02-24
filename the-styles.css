@@ -242,14 +242,14 @@ body.printable .property-single-container{
 }
 
 .property-slider.with-container{
-	height:360px;
+	height:410px;
 	padding:0;
 	border:0;
 	margin-bottom:30px;
 }
 
 .property-slider .x-slides img{
-	height:360px;
+	height:410px;
 	object-fit:cover;
 }
 

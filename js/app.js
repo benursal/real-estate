@@ -21,6 +21,14 @@ jQuery(document).ready(function($){
 		fixedBgPos : true
 	});
 	
+	// flexbox
+	$('.x-flexslider').flexslider({
+		controlNav: true,  
+		directionNav: true,  
+		prevText: '<i class="x-icon-chevron-left" data-x-icon=""></i>', 
+		nextText: '<i class="x-icon-chevron-right" data-x-icon=""></i>', 
+	});
+	
 	
 	property_list.find('a').click(function(e){
 		// prevent going to the page

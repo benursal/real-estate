@@ -1,12 +1,14 @@
 <?php
 // set property object
 $property = new EPL_Property_Meta($post);
-
-
 $post = $property->post;
 setup_postdata( $post );
 
-$brochure_button = '[button class="x-btn-blue" type="flat" shape="pill" size="regular" href="'.site_url('wp-content/files/'.$post->post_name.'.pdf').'" target="blank"]Get the brochure[/button]';
+
+show_pre( $property );
+
+
+$brochure_button = '[button class="x-btn-blue" type="flat" shape="pill" size="regular" href="'.site_url('wp-content/files/'.$post->post_name.'.pdf').'" target="blank" style="width:100%"]Get the brochure[/button]';
 ?>
 
 <?php if( is_printable() ) : ?>
@@ -35,35 +37,18 @@ $brochure_button = '[button class="x-btn-blue" type="flat" shape="pill" size="re
 		{
 			$attachments = get_children( $args );
 			
-			$featured_image = '[slider class="property-slider" animation="slide" slide_time="5000" slide_speed="600" slideshow="true" random="false" control_nav="true" prev_next_nav="true"]';
+			$featured_image = '<div class="property-featured-image"><div class="x-flexslider property-slider with-container"><ul class="slides">';
 
 			foreach( $attachments as $image )
 			{
-				$featured_image .= '[slide]<img src="'.$image->guid.'" />[/slide]';
+				$featured_image .= '<li class="x-slides"><img src="'.$image->guid.'" /></li>';
 			}
 
-			$featured_image .= '[/slider]';	
+			$featured_image .= '</ul></div></div>';	
 		}
 	?>
 	
-	
-	<!-- Place somewhere in the <body> of your page -->
-	<div class="property-featured-image">
-		<div class="x-flexslider property-slider with-container">
-			<ul class="slides">
-				<li class="x-slides">
-					<img src="http://localhost/rockwell/wp-content/uploads/2017/01/p3-3.jpg" />
-				</li>
-				<li class="x-slides">
-					<img src="http://localhost/rockwell/wp-content/uploads/2017/01/p3-2.jpg" />
-				</li>
-				<li class="x-slides">
-					<img src="http://localhost/rockwell/wp-content/uploads/2017/01/p3-1.jpg" />
-				</li>
-			</ul>
-		</div>
-	</div>
-	<!--<div class="property-featured-image"><?php echo do_shortcode($featured_image); ?></div>-->
+	<div class="property-featured-image"><?php echo do_shortcode($featured_image); ?></div>
 	
 	<div class="property-info">
 		<div class="x-column x-sm x-2-3 property-details">
@@ -81,7 +66,6 @@ $brochure_button = '[button class="x-btn-blue" type="flat" shape="pill" size="re
 			</div>
 			
 			<div class="property-features">
-				<h3>Features:</h3>
 				<?php epl_the_content(); ?>
 			</div>
 			
