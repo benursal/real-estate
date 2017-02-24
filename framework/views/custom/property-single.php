@@ -1,6 +1,7 @@
 <?php
-global $property;
-global $post;
+// set property object
+$property = new EPL_Property_Meta($post);
+
 
 $post = $property->post;
 setup_postdata( $post );
@@ -45,54 +46,74 @@ $brochure_button = '[button class="x-btn-blue" type="flat" shape="pill" size="re
 		}
 	?>
 	
-	<div class="property-featured-image"><?php echo do_shortcode($featured_image); ?></div>
 	
-	<div class="x-column x-sm x-2-3 property-details">
-		<h1 class="property-title"><?php echo get_the_title(); ?></h1>
-		<h3 class="property-display-price"><?php echo epl_get_property_price(); ?></h3>
-		<div class="property-address"><?php epl_property_the_address(); ?></div>
-		<div class="property-status"><?php echo ucwords($property->get_property_meta( 'property_status' , true ));?></div>
-		<div class="property-category"><?php epl_property_commercial_category(); ?></div>
-		
-		<div class="property-introduction">
+	<!-- Place somewhere in the <body> of your page -->
+	<div class="property-featured-image">
+		<div class="x-flexslider property-slider with-container">
+			<ul class="slides">
+				<li class="x-slides">
+					<img src="http://localhost/rockwell/wp-content/uploads/2017/01/p3-3.jpg" />
+				</li>
+				<li class="x-slides">
+					<img src="http://localhost/rockwell/wp-content/uploads/2017/01/p3-2.jpg" />
+				</li>
+				<li class="x-slides">
+					<img src="http://localhost/rockwell/wp-content/uploads/2017/01/p3-1.jpg" />
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!--<div class="property-featured-image"><?php echo do_shortcode($featured_image); ?></div>-->
+	
+	<div class="property-info">
+		<div class="x-column x-sm x-2-3 property-details">
+			<h1 class="property-title"><?php echo get_the_title(); ?></h1>
+			<h3 class="property-display-price"><?php echo epl_get_property_price(); ?></h3>
+			<div class="property-address"><?php epl_property_the_address(); ?></div>
+			<div class="property-status"><?php echo ucwords($property->get_property_meta( 'property_status' , true ));?></div>
+			<div class="property-category"><?php epl_property_commercial_category(); ?></div>
 			
-			<p>
-				<?php echo $property->get_property_meta( 'property_introduction' , true );?>
-			</p>
+			<div class="property-introduction">
+				
+				<p>
+					<?php echo $property->get_property_meta( 'property_introduction' , true );?>
+				</p>
+			</div>
+			
+			<div class="property-features">
+				<h3>Features:</h3>
+				<?php epl_the_content(); ?>
+			</div>
+			
+			<?php if( !is_printable() ) : ?>
+			<?php echo '<p style="text-align:center">'.do_shortcode($brochure_button).'</p>'; ?>
+			<?php endif; ?>
+			
 		</div>
-		
-		<div class="property-features">
-			<h3>Features:</h3>
-			<?php epl_the_content(); ?>
+			
+		<?php if( is_printable() ) : ?>
+		<div class="image-gallery">
+			<?php unset( $args['numberposts'] ); $attachments = get_children( $args ); ?>
+			<?php foreach( $attachments as $image ) : ?>
+			
+				<div class="image-gallery-item"><img src="<?php echo $image->guid;?>" /></div>
+			
+			<?php endforeach; ?>
+			<?php echo do_shortcode('[clear]'); ?>
 		</div>
-		
-		<?php if( !is_printable() ) : ?>
-		<?php echo '<p style="text-align:center">'.do_shortcode($brochure_button).'</p>'; ?>
 		<?php endif; ?>
 		
-	</div>
-		
-	<?php if( is_printable() ) : ?>
-	<div class="image-gallery">
-		<?php unset( $args['numberposts'] ); $attachments = get_children( $args ); ?>
-		<?php foreach( $attachments as $image ) : ?>
-		
-			<div class="image-gallery-item"><img src="<?php echo $image->guid;?>" /></div>
-		
-		<?php endforeach; ?>
+		<div class="x-column x-sm x-1-3 property-contact-sidebar">
+			
+			<?php if( !is_printable() ) : ?>
+			<?php echo '<p style="text-align:center">'.do_shortcode($brochure_button).'</p>'; ?>
+			<hr />
+			<?php endif; ?>
+			
+			<?php if ( is_active_sidebar( 'property-contact-information'  ) ) : ?>
+				<?php dynamic_sidebar( 'property-contact-information' ); ?>
+			<?php endif; ?>
+		</div>
 		<?php echo do_shortcode('[clear]'); ?>
-	</div>
-	<?php endif; ?>
-	
-	<div class="x-column x-sm x-1-3 property-contact-sidebar">
-		
-		<?php if( !is_printable() ) : ?>
-		<?php echo '<p style="text-align:center">'.do_shortcode($brochure_button).'</p>'; ?>
-		<hr />
-		<?php endif; ?>
-		
-		<?php if ( is_active_sidebar( 'property-contact-information'  ) ) : ?>
-			<?php dynamic_sidebar( 'property-contact-information' ); ?>
-		<?php endif; ?>
 	</div>
 </div>

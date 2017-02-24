@@ -28,6 +28,11 @@ jQuery(document).ready(function($){
 		
 		var prop_url = this.href;
 		
+		// get the parent of the link that was clicked
+		var prop_id = $(this).parents('.epl-listing-post').prop('id');
+		// remove the string "post-" to get just the ID
+		prop_id = prop_id.replace('post-', '');
+		
 		$('.popup-opener').click();
 		$('#property-popup .body').html('');
 		
@@ -37,10 +42,17 @@ jQuery(document).ready(function($){
 			type: 'post',
 			data: {
 				'action':'property_single_popup', 
-				'property_url' : prop_url
+				'property_id' : prop_id
+				//'printable' : 'yes'
 			},
 			success:function(data) {
-				console.log( data );
+				$('#property-popup .body').html( data );
+				$('.x-flexslider').flexslider({
+					controlNav: true,  
+					directionNav: true,  
+					prevText: '<i class="x-icon-chevron-left" data-x-icon=""></i>', 
+					nextText: '<i class="x-icon-chevron-right" data-x-icon=""></i>', 
+				});
 			},
 			error: function(errorThrown){
 				

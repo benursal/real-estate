@@ -216,11 +216,25 @@ add_action( 'wp_ajax_property_single_popup', 'property_single_popup' );
 
 function property_single_popup()
 {
-	$prop_url = str_replace(site_url().'/', '', $_REQUEST['property_url']);
-	$prop_url = mb_substr($prop_url, 0, -1);
-	$url = explode('/', $prop_url);
+	global $post;
+	// get the property id
+	$id = $_REQUEST['property_id'];
+	// assign post object
+	$post = get_post( $id );
+	// call the view
+	x_get_view( 'custom', 'property-single' );
 	
-	show_pre( $url );
 	
 	die();
 }
+
+function test()
+{
+	global $post;
+	
+	$post = get_post( 49 );
+	
+	x_get_view( 'custom', 'property-single' );
+}
+
+//add_action( 'template_redirect', 'test' );
